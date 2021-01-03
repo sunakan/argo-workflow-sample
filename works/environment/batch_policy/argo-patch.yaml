@@ -1,0 +1,6 @@
+data:
+  config: |
+    artifactRepository:
+      s3:
+        bucket: batch-artifact-repository-helloworld
+        endpoint: s3.amazonaws.com
