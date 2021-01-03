@@ -25,7 +25,7 @@ include::./apply-argo.adoc[]
 
 include::./bind-role-to-serviceaccount.adoc[]
 
-include::./submit-argo-sample-without-minio.adoc[]
+include::./submit-argo-sample-workflow.adoc[]
 
 //include::./include-code.adoc[]
 //
