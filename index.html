@@ -5,8 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<meta name="author" content="sunakan">
-<title>テスト</title>
+<title>スタート</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -440,84 +439,161 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>テスト</h1>
-<div class="details">
-<span id="author" class="author">sunakan</span><br>
-</div>
 <div id="toc" class="toc2">
 <div id="toctitle">目次</div>
 <ul class="sectlevel1">
-<li><a href="#_ノート_01">1. ノート 01</a></li>
-<li><a href="#_ノート_02">2. ノート 02</a>
-<ul class="sectlevel2">
-<li><a href="#_git_subtreeとは">2.1. git subtreeとは。。</a></li>
-</ul>
-</li>
-<li><a href="#_ソースコードの埋め込み">3. ソースコードの埋め込み</a></li>
-<li><a href="#_吹き出しソースコード">4. 吹き出しソースコード</a></li>
-<li><a href="#_脚注">5. 脚注</a></li>
-<li><a href="#_リスト">6. リスト</a></li>
+<li><a href="#_スタート">1. スタート</a></li>
+<li><a href="#_ジョブの作成">2. ジョブの作成</a></li>
+<li><a href="#_ジョブのクリーンアップここでやめたい時">3. ジョブのクリーンアップ（ここでやめたい時）</a></li>
+<li><a href="#_argoのインストール">4. Argoのインストール</a></li>
+<li><a href="#_argoのアンインストールクリーンアップしたい時">5. Argoのアンインストール（クリーンアップしたい時）</a></li>
+<li><a href="#_ソースコードの埋め込み">6. ソースコードの埋め込み</a></li>
+<li><a href="#_吹き出しソースコード">7. 吹き出しソースコード</a></li>
+<li><a href="#_ブロック">8. ブロック</a></li>
+<li><a href="#_脚注">9. 脚注</a></li>
+<li><a href="#_リスト">10. リスト</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="_スタート"><a class="link" href="#_スタート">1. スタート</a></h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>デフォルトブランチをdevelopにする</p>
-</li>
-<li>
-<p>masterブランチはドキュメントブランチとする</p>
-</li>
-</ul>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">表 1. テーブルタイトル</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">minikube</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.16.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">kubectl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">client:1.20.1, server:1.20.0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre>$ minikube start
+😄  Ubuntu 18.04 (vbox/amd64) 上の minikube v1.16.0
+✨  プロフィールを元に、 docker ドライバを使用します
+👍  コントロールプレーンのノード minikube を minikube 上で起動しています
+🔄  既存の docker container を "minikube" のために再起動しています...
+🐳  Docker 20.10.0 で Kubernetes v1.20.0 を準備しています...
+🔎  Kubernetes コンポーネントを検証しています...
+🔎  Verifying ingress addon...
+🌟  有効なアドオン: storage-provisioner, default-storageclass, ingress
+🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default</pre>
+</div>
 </div>
 <div class="listingblock">
-<div class="title">masterブランチをGitHub Pagesに使いたい場合</div>
 <div class="content">
-<pre># developブランチで
-$ git subtree push --prefix docs/html/ origin master</pre>
+<pre>$ minikube status
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+timeToStop: Nonexistent</pre>
 </div>
 </div>
 <div class="listingblock">
-<div class="title">masterブランチをGitHub Pagesに使いたい場合</div>
+<div class="title">始めの状態</div>
 <div class="content">
-<pre># developブランチで
-$ git subtree push --prefix docs/html/ origin gh-pages</pre>
+<pre>$ kubectl get pod,service,deployment
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP   2d17h</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">別のshellでwatchで監視</div>
+<div class="content">
+<pre>$ watch -n 1 'kubectl get pod,service,deployment,job -o wide'</pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ノート_01"><a class="link" href="#_ノート_01">1. ノート 01</a></h2>
+<h2 id="_ジョブの作成"><a class="link" href="#_ジョブの作成">2. ジョブの作成</a></h2>
 <div class="sectionbody">
 <div class="listingblock">
-<div class="title">hello</div>
 <div class="content">
-<pre>$ echo hello</pre>
+<pre>$ bash 01-create-job-manifestfile.sh
+$ bash 02-apply-job.sh
+job.batch/whalesay created</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ kubectl get job/whalesay
+NAME       COMPLETIONS   DURATION   AGE
+whalesay   1/1           55s        3m11s</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ kubectl logs -l job-name=whalesay
+     \
+      \
+                    ##        .
+              ## ## ##       ==
+           ## ## ## ##      ===
+       /""""""""""""""""___/ ===
+  ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~
+       \______ o          __/
+        \    \        __/
+          \____\______/</pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ノート_02"><a class="link" href="#_ノート_02">2. ノート 02</a></h2>
+<h2 id="_ジョブのクリーンアップここでやめたい時"><a class="link" href="#_ジョブのクリーンアップここでやめたい時">3. ジョブのクリーンアップ（ここでやめたい時）</a></h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>テスト</p>
-</li>
-</ul>
+<div class="listingblock">
+<div class="content">
+<pre>$ bash 02-cleanup.sh</pre>
 </div>
-<div class="sect2">
-<h3 id="_git_subtreeとは"><a class="link" href="#_git_subtreeとは">2.1. git subtreeとは。。</a></h3>
-
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ソースコードの埋め込み"><a class="link" href="#_ソースコードの埋め込み">3. ソースコードの埋め込み</a></h2>
+<h2 id="_argoのインストール"><a class="link" href="#_argoのインストール">4. Argoのインストール</a></h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>$ ARGO_VERSION="v2.9.1" &amp;&amp; sudo curl -L -o ./argo https://github.com/argoproj/argo/releases/download/${ARGO_VERSION}/argo-linux-amd64
+$ sudo chmod +x ./argo
+$ sudo mv ./argo /usr/local/bin/argo
+$ argo version --short
+argo: v2.9.1</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_argoのアンインストールクリーンアップしたい時"><a class="link" href="#_argoのアンインストールクリーンアップしたい時">5. Argoのアンインストール（クリーンアップしたい時）</a></h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>$ sudo rm /usr/local/bin/argo</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ソースコードの埋め込み"><a class="link" href="#_ソースコードの埋め込み">6. ソースコードの埋め込み</a></h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="title">行数指定可能</div>
@@ -536,7 +612,7 @@ html:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_吹き出しソースコード"><a class="link" href="#_吹き出しソースコード">4. 吹き出しソースコード</a></h2>
+<h2 id="_吹き出しソースコード"><a class="link" href="#_吹き出しソースコード">7. 吹き出しソースコード</a></h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="title">吹き出し便利(これは埋め込みしてない)</div>
@@ -558,11 +634,15 @@ world:
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>あああ
-== ブロック</td>
+<td>あああ</td>
 </tr>
 </table>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ブロック"><a class="link" href="#_ブロック">8. ブロック</a></h2>
+<div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
 <div class="title">AsciiDocの歴史</div>
@@ -576,7 +656,7 @@ AsciiDocは、DocBookやLaTeXのような専門的な文章を作成するため
 </div>
 </div>
 <div class="sect1">
-<h2 id="_脚注"><a class="link" href="#_脚注">5. 脚注</a></h2>
+<h2 id="_脚注"><a class="link" href="#_脚注">9. 脚注</a></h2>
 <div class="sectionbody">
 <div class="admonitionblock note">
 <table>
@@ -630,7 +710,7 @@ AsciiDocは、DocBookやLaTeXのような専門的な文章を作成するため
 </div>
 </div>
 <div class="sect1">
-<h2 id="_リスト"><a class="link" href="#_リスト">6. リスト</a></h2>
+<h2 id="_リスト"><a class="link" href="#_リスト">10. リスト</a></h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
@@ -674,7 +754,7 @@ AsciiDocは、DocBookやLaTeXのような専門的な文章を作成するため
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-07 20:08:10 UTC
+Last updated 2021-01-03 03:02:45 UTC
 </div>
 </div>
 <style>
