@@ -443,23 +443,37 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">目次</div>
 <ul class="sectlevel1">
 <li><a href="#_スタート">1. スタート</a></li>
-<li><a href="#_ジョブの作成">2. ジョブの作成</a>
+<li><a href="#_argo">2. Argo</a>
 <ul class="sectlevel2">
-<li><a href="#_作成して確認するまで">2.1. 作成して確認するまで</a></li>
-<li><a href="#_ジョブのクリーンアップここでやめたい時">2.2. ジョブのクリーンアップ（ここでやめたい時）</a></li>
+<li><a href="#_インストール">2.1. インストール</a></li>
+<li><a href="#_アンインストールクリーンアップ">2.2. アンインストール（クリーンアップ）</a></li>
 </ul>
 </li>
-<li><a href="#_argo">3. Argo</a>
+<li><a href="#_argo用の名前空間">3. Argo用の名前空間</a>
 <ul class="sectlevel2">
-<li><a href="#_インストール">3.1. インストール</a></li>
-<li><a href="#_アンインストール">3.2. アンインストール</a></li>
+<li><a href="#_作成">3.1. 作成</a></li>
+<li><a href="#_削除クリーンアップ">3.2. 削除（クリーンアップ）</a></li>
 </ul>
 </li>
-<li><a href="#_ソースコードの埋め込み">4. ソースコードの埋め込み</a></li>
-<li><a href="#_吹き出しソースコード">5. 吹き出しソースコード</a></li>
-<li><a href="#_ブロック">6. ブロック</a></li>
-<li><a href="#_脚注">7. 脚注</a></li>
-<li><a href="#_リスト">8. リスト</a></li>
+<li><a href="#_argo_controller">4. Argo Controller</a>
+<ul class="sectlevel2">
+<li><a href="#_apply">4.1. Apply</a></li>
+<li><a href="#_deleteクリーンアップ">4.2. Delete（クリーンアップ）</a></li>
+</ul>
+</li>
+<li><a href="#_argoのserviceaccount">5. ArgoのServiceAccount</a>
+<ul class="sectlevel2">
+<li><a href="#_binding">5.1. Binding</a></li>
+<li><a href="#_unbindingクリーンアップ">5.2. Unbinding（クリーンアップ）</a></li>
+<li><a href="#_rolebindingに対しての勉強">5.3. rolebindingに対しての勉強</a></li>
+</ul>
+</li>
+<li><a href="#_ワークフローのサンプル">6. ワークフローのサンプル</a></li>
+<li><a href="#_ソースコードの埋め込み">7. ソースコードの埋め込み</a></li>
+<li><a href="#_吹き出しソースコード">8. 吹き出しソースコード</a></li>
+<li><a href="#_ブロック">9. ブロック</a></li>
+<li><a href="#_脚注">10. 脚注</a></li>
+<li><a href="#_リスト">11. リスト</a></li>
 </ul>
 </div>
 </div>
@@ -533,67 +547,26 @@ service/kubernetes   ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP   2d17
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ジョブの作成"><a class="link" href="#_ジョブの作成">2. ジョブの作成</a></h2>
+<h2 id="_argo"><a class="link" href="#_argo">2. Argo</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_作成して確認するまで"><a class="link" href="#_作成して確認するまで">2.1. 作成して確認するまで</a></h3>
-<div class="listingblock">
-<div class="content">
-<pre>$ bash 01-create-job-manifestfile.sh
-$ bash 02-apply-job.sh
-job.batch/whalesay created</pre>
-</div>
+<h3 id="_インストール"><a class="link" href="#_インストール">2.1. インストール</a></h3>
+<div class="paragraph">
+<p><a href="https://github.com/argoproj/argo/releases">github.com/argoproj/argo/releases</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ kubectl get job/whalesay
-NAME       COMPLETIONS   DURATION   AGE
-whalesay   1/1           55s        3m11s</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ kubectl logs -l job-name=whalesay
-     \
-      \
-                    ##        .
-              ## ## ##       ==
-           ## ## ## ##      ===
-       /""""""""""""""""___/ ===
-  ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~
-       \______ o          __/
-        \    \        __/
-          \____\______/</pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ジョブのクリーンアップここでやめたい時"><a class="link" href="#_ジョブのクリーンアップここでやめたい時">2.2. ジョブのクリーンアップ（ここでやめたい時）</a></h3>
-<div class="listingblock">
-<div class="content">
-<pre>$ bash 02-cleanup.sh</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_argo"><a class="link" href="#_argo">3. Argo</a></h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_インストール"><a class="link" href="#_インストール">3.1. インストール</a></h3>
-<div class="listingblock">
-<div class="content">
-<pre>$ ARGO_VERSION="v2.9.1" &amp;&amp; sudo curl -L -o ./argo https://github.com/argoproj/argo/releases/download/${ARGO_VERSION}/argo-linux-amd64
-$ sudo chmod +x ./argo
-$ sudo mv ./argo /usr/local/bin/argo
+<pre>$ ARGO_VERSION="v2.12.2" &amp;&amp; curl -o ./argo.gz -L https://github.com/argoproj/argo/releases/download/${ARGO_VERSION}/argo-linux-amd64.gz
+$ gunzip ./argo.gz
+$ chmod +x ./argo
+$ sudo mv ./argo /usr/local/bin/
 $ argo version --short
-argo: v2.9.1</pre>
+argo: v2.12.2</pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_アンインストール"><a class="link" href="#_アンインストール">3.2. アンインストール</a></h3>
+<h3 id="_アンインストールクリーンアップ"><a class="link" href="#_アンインストールクリーンアップ">2.2. アンインストール（クリーンアップ）</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre>$ sudo rm /usr/local/bin/argo</pre>
@@ -603,7 +576,198 @@ argo: v2.9.1</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ソースコードの埋め込み"><a class="link" href="#_ソースコードの埋め込み">4. ソースコードの埋め込み</a></h2>
+<h2 id="_argo用の名前空間"><a class="link" href="#_argo用の名前空間">3. Argo用の名前空間</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_作成"><a class="link" href="#_作成">3.1. 作成</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre>$ kubectl create namespace argo</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_削除クリーンアップ"><a class="link" href="#_削除クリーンアップ">3.2. 削除（クリーンアップ）</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre>$ kubectl delete namespace argo</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_argo_controller"><a class="link" href="#_argo_controller">4. Argo Controller</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apply"><a class="link" href="#_apply">4.1. Apply</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre>$ kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/quick-start-postgres.yaml</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ kubectl get all -n argo
+NAME                                       READY   STATUS    RESTARTS   AGE
+pod/argo-server-694d999c94-dx9k6           1/1     Running   3          96s
+pod/minio                                  1/1     Running   0          95s
+pod/postgres-6b5c55f477-mxpnc              1/1     Running   0          96s
+pod/workflow-controller-5664f75b4b-cjjts   1/1     Running   0          96s
+
+NAME                                  TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/argo-server                   ClusterIP   10.98.29.2      &lt;none&gt;        2746/TCP   96s
+service/minio                         ClusterIP   10.105.6.191    &lt;none&gt;        9000/TCP   96s
+service/postgres                      ClusterIP   10.107.59.254   &lt;none&gt;        5432/TCP   96s
+service/workflow-controller-metrics   ClusterIP   10.107.142.90   &lt;none&gt;        9090/TCP   96s
+
+NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/argo-server           1/1     1            1           96s
+deployment.apps/postgres              1/1     1            1           96s
+deployment.apps/workflow-controller   1/1     1            1           96s
+
+NAME                                             DESIRED   CURRENT   READY   AGE
+replicaset.apps/argo-server-694d999c94           1         1         1       96s
+replicaset.apps/postgres-6b5c55f477              1         1         1       96s
+replicaset.apps/workflow-controller-5664f75b4b   1         1         1       96s</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>pod/minio(fake s3)とpod/postgresも立ち上がってることに注目</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deleteクリーンアップ"><a class="link" href="#_deleteクリーンアップ">4.2. Delete（クリーンアップ）</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre>$ kubectl delete -n argo -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/quick-start-postgres.yaml</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_argoのserviceaccount"><a class="link" href="#_argoのserviceaccount">5. ArgoのServiceAccount</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AWS IAMのUser/Groupへのポリシーの "アタッチリソース" って感じ</p>
+</div>
+<div class="sect2">
+<h3 id="_binding"><a class="link" href="#_binding">5.1. Binding</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre>$ kubectl -n argo create rolebinding default-admin --clusterrole=admin --serviceaccount=argo:default</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>default-admin</code> という名前の <code>rolebinding</code> を作る</p>
+</div>
+<div class="paragraph">
+<p>設定するroleは <code>クラスタロール</code> の <code>admin</code></p>
+</div>
+<div class="paragraph">
+<p>名前空間 <code>argo</code> にある <code>default</code> という名前の <code>ServiceAccount</code> に対して設定</p>
+</div>
+<div class="listingblock">
+<div class="title">Before</div>
+<div class="content">
+<pre>$ kubectl get rolebinding -n argo
+NAME           ROLE             AGE
+argo-binding   Role/argo-role   34m</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">After</div>
+<div class="content">
+<pre>$ kubectl get rolebinding -n argo
+NAME            ROLE                AGE
+argo-binding    Role/argo-role      33m
+default-admin   ClusterRole/admin   14s</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unbindingクリーンアップ"><a class="link" href="#_unbindingクリーンアップ">5.2. Unbinding（クリーンアップ）</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre>$ kubectl -n argo delete rolebinding default-admin</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rolebindingに対しての勉強"><a class="link" href="#_rolebindingに対しての勉強">5.3. rolebindingに対しての勉強</a></h3>
+<div class="paragraph">
+<p><a href="https://qiita.com/sheepland/items/67a5bb9b19d8686f389d">【Qiita】KubernetesのRBACについて</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://gihyo.jp/dp/ebook/2019/978-4-297-10958-5">Kubernetesポケットリファレンス p.91~</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ kubectl create rolebinding --help</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ワークフローのサンプル"><a class="link" href="#_ワークフローのサンプル">6. ワークフローのサンプル</a></h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">複雑なワークフロー</div>
+<div class="content">
+<pre>$ argo submit -n argo --watch https://raw.githubusercontent.com/argoproj/argo/master/examples/dag-nested.yaml</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">出力結果</div>
+<div class="content">
+<pre>Name:                dag-nested-chkvx
+Namespace:           argo
+ServiceAccount:      default
+Status:              Succeeded
+Conditions:
+ Completed           True
+Created:             Sun Jan 03 15:52:43 +0900 (42 seconds ago)
+Started:             Sun Jan 03 15:52:43 +0900 (42 seconds ago)
+Finished:            Sun Jan 03 15:53:25 +0900 (now)
+Duration:            42 seconds
+Progress:            16/16
+ResourcesDuration:   23s*(1 cpu),23s*(100Mi memory)
+
+STEP                 TEMPLATE        PODNAME                      DURATION  MESSAGE
+ ✔ dag-nested-chkvx  diamond
+ ├─✔ A               nested-diamond
+ │ ├─✔ A             echo            dag-nested-chkvx-2640467346  9s
+ │ ├─✔ B             echo            dag-nested-chkvx-2623689727  3s
+ │ ├─✔ C             echo            dag-nested-chkvx-2606912108  3s
+ │ └─✔ D             echo            dag-nested-chkvx-2590134489  2s
+ ├─✔ B               nested-diamond
+ │ ├─✔ A             echo            dag-nested-chkvx-785634043   2s
+ │ ├─✔ B             echo            dag-nested-chkvx-802411662   3s
+ │ ├─✔ C             echo            dag-nested-chkvx-819189281   3s
+ │ └─✔ D             echo            dag-nested-chkvx-835966900   3s
+ ├─✔ C               nested-diamond
+ │ ├─✔ A             echo            dag-nested-chkvx-1404030972  2s
+ │ ├─✔ B             echo            dag-nested-chkvx-1454363829  3s
+ │ ├─✔ C             echo            dag-nested-chkvx-1437586210  3s
+ │ └─✔ D             echo            dag-nested-chkvx-1353698115  3s
+ └─✔ D               nested-diamond
+   ├─✔ A             echo            dag-nested-chkvx-3823376613  2s
+   ├─✔ B             echo            dag-nested-chkvx-3773043756  2s
+   ├─✔ C             echo            dag-nested-chkvx-3789821375  2s
+   └─✔ D             echo            dag-nested-chkvx-3739488518  2s</pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./_images/argo-ui.png" alt="argo ui">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ソースコードの埋め込み"><a class="link" href="#_ソースコードの埋め込み">7. ソースコードの埋め込み</a></h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="title">行数指定可能</div>
@@ -622,7 +786,7 @@ html:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_吹き出しソースコード"><a class="link" href="#_吹き出しソースコード">5. 吹き出しソースコード</a></h2>
+<h2 id="_吹き出しソースコード"><a class="link" href="#_吹き出しソースコード">8. 吹き出しソースコード</a></h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="title">吹き出し便利(これは埋め込みしてない)</div>
@@ -651,7 +815,7 @@ world:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ブロック"><a class="link" href="#_ブロック">6. ブロック</a></h2>
+<h2 id="_ブロック"><a class="link" href="#_ブロック">9. ブロック</a></h2>
 <div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
@@ -666,7 +830,7 @@ AsciiDocは、DocBookやLaTeXのような専門的な文章を作成するため
 </div>
 </div>
 <div class="sect1">
-<h2 id="_脚注"><a class="link" href="#_脚注">7. 脚注</a></h2>
+<h2 id="_脚注"><a class="link" href="#_脚注">10. 脚注</a></h2>
 <div class="sectionbody">
 <div class="admonitionblock note">
 <table>
@@ -720,7 +884,7 @@ AsciiDocは、DocBookやLaTeXのような専門的な文章を作成するため
 </div>
 </div>
 <div class="sect1">
-<h2 id="_リスト"><a class="link" href="#_リスト">8. リスト</a></h2>
+<h2 id="_リスト"><a class="link" href="#_リスト">11. リスト</a></h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
@@ -764,7 +928,7 @@ AsciiDocは、DocBookやLaTeXのような専門的な文章を作成するため
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-01-03 03:17:14 UTC
+Last updated 2021-01-03 07:17:24 UTC
 </div>
 </div>
 <style>
