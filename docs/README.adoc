@@ -15,21 +15,11 @@
 :docname: = ノート
 :author: sunakan
 
-= テスト
-
-* デフォルトブランチをdevelopにする
-* gh-pagesブランチはドキュメントブランチとする
-
-.gh-pagesブランチをGitHub Pagesに使いたい場合
-----
-# developブランチで
-$ git subtree push --prefix docs/html/ origin gh-pages
-----
-
-
 include::./note-01.adoc[]
 
 include::./note-02.adoc[]
+
+include::./note-03.adoc[]
 
 include::./include-code.adoc[]
 
