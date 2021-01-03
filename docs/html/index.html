@@ -443,15 +443,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">目次</div>
 <ul class="sectlevel1">
 <li><a href="#_スタート">1. スタート</a></li>
-<li><a href="#_ジョブの作成">2. ジョブの作成</a></li>
-<li><a href="#_ジョブのクリーンアップここでやめたい時">3. ジョブのクリーンアップ（ここでやめたい時）</a></li>
-<li><a href="#_argoのインストール">4. Argoのインストール</a></li>
-<li><a href="#_argoのアンインストールクリーンアップしたい時">5. Argoのアンインストール（クリーンアップしたい時）</a></li>
-<li><a href="#_ソースコードの埋め込み">6. ソースコードの埋め込み</a></li>
-<li><a href="#_吹き出しソースコード">7. 吹き出しソースコード</a></li>
-<li><a href="#_ブロック">8. ブロック</a></li>
-<li><a href="#_脚注">9. 脚注</a></li>
-<li><a href="#_リスト">10. リスト</a></li>
+<li><a href="#_ジョブの作成">2. ジョブの作成</a>
+<ul class="sectlevel2">
+<li><a href="#_作成して確認するまで">2.1. 作成して確認するまで</a></li>
+<li><a href="#_ジョブのクリーンアップここでやめたい時">2.2. ジョブのクリーンアップ（ここでやめたい時）</a></li>
+</ul>
+</li>
+<li><a href="#_argo">3. Argo</a>
+<ul class="sectlevel2">
+<li><a href="#_インストール">3.1. インストール</a></li>
+<li><a href="#_アンインストール">3.2. アンインストール</a></li>
+</ul>
+</li>
+<li><a href="#_ソースコードの埋め込み">4. ソースコードの埋め込み</a></li>
+<li><a href="#_吹き出しソースコード">5. 吹き出しソースコード</a></li>
+<li><a href="#_ブロック">6. ブロック</a></li>
+<li><a href="#_脚注">7. 脚注</a></li>
+<li><a href="#_リスト">8. リスト</a></li>
 </ul>
 </div>
 </div>
@@ -527,6 +535,8 @@ service/kubernetes   ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP   2d17
 <div class="sect1">
 <h2 id="_ジョブの作成"><a class="link" href="#_ジョブの作成">2. ジョブの作成</a></h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_作成して確認するまで"><a class="link" href="#_作成して確認するまで">2.1. 作成して確認するまで</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre>$ bash 01-create-job-manifestfile.sh
@@ -557,10 +567,8 @@ whalesay   1/1           55s        3m11s</pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_ジョブのクリーンアップここでやめたい時"><a class="link" href="#_ジョブのクリーンアップここでやめたい時">3. ジョブのクリーンアップ（ここでやめたい時）</a></h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_ジョブのクリーンアップここでやめたい時"><a class="link" href="#_ジョブのクリーンアップここでやめたい時">2.2. ジョブのクリーンアップ（ここでやめたい時）</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre>$ bash 02-cleanup.sh</pre>
@@ -568,9 +576,12 @@ whalesay   1/1           55s        3m11s</pre>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="_argoのインストール"><a class="link" href="#_argoのインストール">4. Argoのインストール</a></h2>
+<h2 id="_argo"><a class="link" href="#_argo">3. Argo</a></h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_インストール"><a class="link" href="#_インストール">3.1. インストール</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre>$ ARGO_VERSION="v2.9.1" &amp;&amp; sudo curl -L -o ./argo https://github.com/argoproj/argo/releases/download/${ARGO_VERSION}/argo-linux-amd64
@@ -581,10 +592,8 @@ argo: v2.9.1</pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_argoのアンインストールクリーンアップしたい時"><a class="link" href="#_argoのアンインストールクリーンアップしたい時">5. Argoのアンインストール（クリーンアップしたい時）</a></h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_アンインストール"><a class="link" href="#_アンインストール">3.2. アンインストール</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre>$ sudo rm /usr/local/bin/argo</pre>
@@ -592,8 +601,9 @@ argo: v2.9.1</pre>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="_ソースコードの埋め込み"><a class="link" href="#_ソースコードの埋め込み">6. ソースコードの埋め込み</a></h2>
+<h2 id="_ソースコードの埋め込み"><a class="link" href="#_ソースコードの埋め込み">4. ソースコードの埋め込み</a></h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="title">行数指定可能</div>
@@ -612,7 +622,7 @@ html:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_吹き出しソースコード"><a class="link" href="#_吹き出しソースコード">7. 吹き出しソースコード</a></h2>
+<h2 id="_吹き出しソースコード"><a class="link" href="#_吹き出しソースコード">5. 吹き出しソースコード</a></h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="title">吹き出し便利(これは埋め込みしてない)</div>
@@ -641,7 +651,7 @@ world:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ブロック"><a class="link" href="#_ブロック">8. ブロック</a></h2>
+<h2 id="_ブロック"><a class="link" href="#_ブロック">6. ブロック</a></h2>
 <div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
@@ -656,7 +666,7 @@ AsciiDocは、DocBookやLaTeXのような専門的な文章を作成するため
 </div>
 </div>
 <div class="sect1">
-<h2 id="_脚注"><a class="link" href="#_脚注">9. 脚注</a></h2>
+<h2 id="_脚注"><a class="link" href="#_脚注">7. 脚注</a></h2>
 <div class="sectionbody">
 <div class="admonitionblock note">
 <table>
@@ -710,7 +720,7 @@ AsciiDocは、DocBookやLaTeXのような専門的な文章を作成するため
 </div>
 </div>
 <div class="sect1">
-<h2 id="_リスト"><a class="link" href="#_リスト">10. リスト</a></h2>
+<h2 id="_リスト"><a class="link" href="#_リスト">8. リスト</a></h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
@@ -754,7 +764,7 @@ AsciiDocは、DocBookやLaTeXのような専門的な文章を作成するため
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-01-03 03:02:45 UTC
+Last updated 2021-01-03 03:17:14 UTC
 </div>
 </div>
 <style>

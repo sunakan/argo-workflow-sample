@@ -1,5 +1,7 @@
 == ジョブの作成
 
+=== 作成して確認するまで
+
 ----
 $ bash 01-create-job-manifestfile.sh
 $ bash 02-apply-job.sh
@@ -26,7 +28,7 @@ $ kubectl logs -l job-name=whalesay
           \____\______/
 ----
 
-== ジョブのクリーンアップ（ここでやめたい時）
+=== ジョブのクリーンアップ（ここでやめたい時）
 
 ----
 $ bash 02-cleanup.sh
