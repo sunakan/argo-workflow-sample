@@ -15,16 +15,22 @@
 :docname: = ノート
 :author: sunakan
 
-include::./note-01.adoc[]
+include::./start-minikube.adoc[]
 
-include::./note-02.adoc[]
+include::./install-argo.adoc[]
 
-include::./note-03.adoc[]
+include::./create-namespace.adoc[]
 
-include::./include-code.adoc[]
+include::./apply-argo.adoc[]
 
-include::./block.adoc[]
+include::./bind-role-to-serviceaccount.adoc[]
 
-include::./note.adoc[]
+include::./submit-argo-sample-without-minio.adoc[]
 
-include::./list.adoc[]
+//include::./include-code.adoc[]
+//
+//include::./block.adoc[]
+//
+//include::./note.adoc[]
+//
+//include::./list.adoc[]

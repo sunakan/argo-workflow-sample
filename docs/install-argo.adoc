@@ -1,0 +1,20 @@
+== Argo
+
+=== インストール
+
+link:https://github.com/argoproj/argo/releases[github.com/argoproj/argo/releases]
+
+----
+$ ARGO_VERSION="v2.12.2" && curl -o ./argo.gz -L https://github.com/argoproj/argo/releases/download/${ARGO_VERSION}/argo-linux-amd64.gz
+$ gunzip ./argo.gz
+$ chmod +x ./argo
+$ sudo mv ./argo /usr/local/bin/
+$ argo version --short
+argo: v2.12.2
+----
+
+=== アンインストール（クリーンアップ）
+
+----
+$ sudo rm /usr/local/bin/argo
+----

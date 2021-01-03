@@ -1,0 +1,40 @@
+== Argo Controller
+
+=== Apply
+
+----
+$ kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/quick-start-postgres.yaml
+----
+
+----
+$ kubectl get all -n argo
+NAME                                       READY   STATUS    RESTARTS   AGE
+pod/argo-server-694d999c94-dx9k6           1/1     Running   3          96s
+pod/minio                                  1/1     Running   0          95s
+pod/postgres-6b5c55f477-mxpnc              1/1     Running   0          96s
+pod/workflow-controller-5664f75b4b-cjjts   1/1     Running   0          96s
+
+NAME                                  TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/argo-server                   ClusterIP   10.98.29.2      <none>        2746/TCP   96s
+service/minio                         ClusterIP   10.105.6.191    <none>        9000/TCP   96s
+service/postgres                      ClusterIP   10.107.59.254   <none>        5432/TCP   96s
+service/workflow-controller-metrics   ClusterIP   10.107.142.90   <none>        9090/TCP   96s
+
+NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/argo-server           1/1     1            1           96s
+deployment.apps/postgres              1/1     1            1           96s
+deployment.apps/workflow-controller   1/1     1            1           96s
+
+NAME                                             DESIRED   CURRENT   READY   AGE
+replicaset.apps/argo-server-694d999c94           1         1         1       96s
+replicaset.apps/postgres-6b5c55f477              1         1         1       96s
+replicaset.apps/workflow-controller-5664f75b4b   1         1         1       96s
+----
+
+pod/minio(fake s3)とpod/postgresも立ち上がってることに注目
+
+=== Delete（クリーンアップ）
+
+----
+$ kubectl delete -n argo -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/quick-start-postgres.yaml
+----

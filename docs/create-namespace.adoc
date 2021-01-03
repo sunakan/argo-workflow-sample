@@ -1,0 +1,13 @@
+== Argo用の名前空間
+
+=== 作成
+
+----
+$ kubectl create namespace argo
+----
+
+=== 削除（クリーンアップ）
+
+----
+$ kubectl delete namespace argo
+----

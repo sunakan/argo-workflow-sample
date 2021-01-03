@@ -1,0 +1,87 @@
+== Artifactのリポジトリの設定
+
+Argoはアーティファクトリポジトリを使用して、ワークフロー内のジョブ間でデータを渡すために、アーティファクトと呼ばれるものを使用。
+
+アーティファクトリポジトリとしてAmazon S3を使用。
+
+
+=== バケットの作成と設定
+
+S3のバケット名はグローバルでユニークである必要があるため、日付やuuidを使うなど工夫する
+
+削除したとき、同名で作ろうとすると作れなかったりするので、気を付ける
+
+
+.バケットの作成
+----
+$ POSTFIX=helloworld && aws s3 mb s3://batch-artifact-repository-${POSTFIX}/ --region ap-northeast-1
+----
+
+.argoのconfigmapのパッチ
+----
+$ POSTFIX=helloworld && cat <<EoF > environment/batch_policy/argo-patch.yaml
+data:
+  config: |
+    artifactRepository:
+      s3:
+        bucket: batch-artifact-repository-${POSTFIX}
+        endpoint: s3.amazonaws.com
+EoF
+----
+
+.configmapを確認
+----
+$ kubectl get -n argo configmap
+NAME                            DATA   AGE
+kube-root-ca.crt                1      86m
+workflow-controller-configmap   0      71m
+----
+
+.設定を注入(patchをあてる)
+----
+$ kubectl -n argo patch configmap/workflow-controller-configmap --patch "$(cat environment/batch_policy/argo-patch.yaml)"
+----
+
+.Before
+----
+$ kubectl describe -n argo configmap workflow-controller-configmap
+Name:         workflow-controller-configmap
+Namespace:    argo
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+Events:  <none>
+----
+
+.After
+----
+$ kubectl describe -n argo configmap workflow-controller-configmap
+Name:         workflow-controller-configmap
+Namespace:    argo
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+config:
+---
+artifactRepository:
+  s3:
+      bucket: batch-artifact-repository-helloworld
+          endpoint: s3.amazonaws.com
+          Events:  <none>
+----
+
+=== バケットの削除（クリーンアップ）
+
+.バケットの強制削除（空じゃなくても）
+----
+$ POSTFIX=helloworld && s3 rb s3://batch-artifact-repository-${POSTFIX} --force
+----
+
+.バケットを空にする
+----
+$ POSTFIX=helloworld && s3 rm s3://batch-artifact-repository-${POSTFIX} --recursive
+----

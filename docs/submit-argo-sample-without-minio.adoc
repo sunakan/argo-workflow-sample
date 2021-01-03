@@ -1,0 +1,47 @@
+== ワークフローのサンプル
+
+.複雑なワークフロー
+----
+$ argo submit -n argo --watch https://raw.githubusercontent.com/argoproj/argo/master/examples/dag-nested.yaml
+----
+
+.出力結果
+----
+Name:                dag-nested-chkvx
+Namespace:           argo
+ServiceAccount:      default
+Status:              Succeeded
+Conditions:
+ Completed           True
+Created:             Sun Jan 03 15:52:43 +0900 (42 seconds ago)
+Started:             Sun Jan 03 15:52:43 +0900 (42 seconds ago)
+Finished:            Sun Jan 03 15:53:25 +0900 (now)
+Duration:            42 seconds
+Progress:            16/16
+ResourcesDuration:   23s*(1 cpu),23s*(100Mi memory)
+
+STEP                 TEMPLATE        PODNAME                      DURATION  MESSAGE
+ ✔ dag-nested-chkvx  diamond
+ ├─✔ A               nested-diamond
+ │ ├─✔ A             echo            dag-nested-chkvx-2640467346  9s
+ │ ├─✔ B             echo            dag-nested-chkvx-2623689727  3s
+ │ ├─✔ C             echo            dag-nested-chkvx-2606912108  3s
+ │ └─✔ D             echo            dag-nested-chkvx-2590134489  2s
+ ├─✔ B               nested-diamond
+ │ ├─✔ A             echo            dag-nested-chkvx-785634043   2s
+ │ ├─✔ B             echo            dag-nested-chkvx-802411662   3s
+ │ ├─✔ C             echo            dag-nested-chkvx-819189281   3s
+ │ └─✔ D             echo            dag-nested-chkvx-835966900   3s
+ ├─✔ C               nested-diamond
+ │ ├─✔ A             echo            dag-nested-chkvx-1404030972  2s
+ │ ├─✔ B             echo            dag-nested-chkvx-1454363829  3s
+ │ ├─✔ C             echo            dag-nested-chkvx-1437586210  3s
+ │ └─✔ D             echo            dag-nested-chkvx-1353698115  3s
+ └─✔ D               nested-diamond
+   ├─✔ A             echo            dag-nested-chkvx-3823376613  2s
+   ├─✔ B             echo            dag-nested-chkvx-3773043756  2s
+   ├─✔ C             echo            dag-nested-chkvx-3789821375  2s
+   └─✔ D             echo            dag-nested-chkvx-3739488518  2s
+----
+
+image::./argo-ui.png[]
